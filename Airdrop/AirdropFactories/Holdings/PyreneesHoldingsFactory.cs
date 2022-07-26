@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Airdrop.AirdropFactories.Holdings
 {
     public class PyreneesHoldingsFactory : ExchangeHoldingsAirdropFactory
     {
-        public PyreneesHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, httpClientFactory.CreateClient())
+        public PyreneesHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, IConfiguration config, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, config, httpClientFactory.CreateClient())
         {
             this.DropAssetId = 765722712;
             this.Decimals = 0;

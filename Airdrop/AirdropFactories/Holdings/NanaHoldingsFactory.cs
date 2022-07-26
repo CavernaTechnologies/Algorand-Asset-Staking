@@ -1,4 +1,5 @@
 ﻿using Algorand.V2.Indexer.Model;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,7 +14,7 @@ namespace Airdrop.AirdropFactories.Holdings
     {
         private readonly ICosmos cosmos;
 
-        public NanaHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, httpClientFactory.CreateClient())
+        public NanaHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, config, httpClientFactory.CreateClient())
         {
             this.DropAssetId = 418706707;
             this.Decimals = 0;

@@ -1,4 +1,5 @@
 ﻿using Algorand.V2.Indexer.Model;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Airdrop.AirdropFactories.Holdings
     {
         private readonly ICosmos cosmos;
 
-        public DrakkHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, httpClientFactory.CreateClient())
+        public DrakkHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, config, httpClientFactory.CreateClient())
         {
             this.DropAssetId = 560039769;
             this.Decimals = 6;

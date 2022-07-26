@@ -1,4 +1,5 @@
 ﻿using Algorand.V2.Algod.Model;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Airdrop.AirdropFactories.Holdings
     {
         private readonly ICosmos cosmos;
 
-        public GrubHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IHttpClientFactory httpClient) : base(indexerUtils, algodUtils, httpClient.CreateClient())
+        public GrubHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClient) : base(indexerUtils, algodUtils, config, httpClient.CreateClient())
         {
             this.cosmos = cosmos;
             this.DropAssetId = 787168529;

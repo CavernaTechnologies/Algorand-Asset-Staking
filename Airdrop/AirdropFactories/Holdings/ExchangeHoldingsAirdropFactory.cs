@@ -1,4 +1,5 @@
 ﻿using Algorand.V2.Algod.Model;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ namespace Airdrop.AirdropFactories.Holdings
         public HttpClient HttpClient { get; }
         public bool SearchRand { get; set; }
         public bool SearchAlgox { get; set; }
+        public bool SearchAlandia { get; set; }
         public string[] AlgoxCollectionNames { get; set; }
+        private string randToken;
 
-        public ExchangeHoldingsAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, HttpClient httpClient) : base(indexerUtils, algodUtils)
+        public ExchangeHoldingsAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, IConfiguration config, HttpClient httpClient) : base(indexerUtils, algodUtils)
         {
             this.HttpClient = httpClient;
+            this.HttpClient.DefaultRequestHeaders.Add("user-agent", "cavernatech/1.0.0");
+            this.randToken = config["randToken"];
         }
 
         public override async Task<IEnumerable<AirdropUnitCollection>> FetchAirdropUnitCollections()
@@ -27,6 +32,7 @@ namespace Airdrop.AirdropFactories.Holdings
             IEnumerable<Account> accounts = await FetchAccounts();
             IDictionary<string, List<(ulong, ulong)>> randAccounts = null; 
             IDictionary<string, List<(ulong, ulong)>> algoxAccounts = null;
+            IDictionary<string, List<(ulong, ulong)>> alandiaAccounts = null;
             if (SearchRand)
             {
                 randAccounts = await FetchRandAccounts();
@@ -34,6 +40,10 @@ namespace Airdrop.AirdropFactories.Holdings
             if (SearchAlgox)
             {
                 algoxAccounts = await FetchAlgoxAccounts();
+            }
+            if (SearchAlandia)
+            {
+                alandiaAccounts = await FetchAlandiaAccounts();
             }
 
             AirdropUnitCollectionManager collectionManager = new AirdropUnitCollectionManager();
@@ -51,6 +61,10 @@ namespace Airdrop.AirdropFactories.Holdings
                 if (SearchAlgox && algoxAccounts != null && algoxAccounts.ContainsKey(address))
                 {
                     AddAssetsInList(collectionManager, address, algoxAccounts[address], assetValues);
+                }
+                if (SearchAlandia && alandiaAccounts != null && alandiaAccounts.ContainsKey(address))
+                {
+                    AddAssetsInList(collectionManager, address, alandiaAccounts[address], assetValues);
                 }
             });
 
@@ -81,13 +95,41 @@ namespace Airdrop.AirdropFactories.Holdings
             }
         }
 
+        public async Task<Dictionary<string, List<(ulong, ulong)>>> FetchAlandiaAccounts()
+        {
+            Dictionary<string, List<(ulong, ulong)>> alandiaBorrowers = new Dictionary<string, List<(ulong, ulong)>>();
+
+            foreach (string creatorAddress in this.CreatorAddresses)
+            {
+                string alandiaEndpoint = "https://alandia.io/api/cached_asset/creator/" + creatorAddress;
+
+                string jsonResponse = await HttpClient.GetStringAsync(alandiaEndpoint);
+                List<AlandiaListing> listings = JsonConvert.DeserializeObject<List<AlandiaListing>>(jsonResponse);
+
+                foreach (AlandiaListing listing in listings)
+                {
+                    if (alandiaBorrowers.ContainsKey(listing.SellerAddress))
+                    {
+                        alandiaBorrowers[listing.SellerAddress].Add((listing.AssetId, 1));
+                    }
+                    else
+                    {
+                        alandiaBorrowers[listing.SellerAddress] = new List<(ulong, ulong)>() { (listing.AssetId, 1) };
+                    }
+                }
+            }
+
+            return alandiaBorrowers;
+        }
+
+
         public async Task<Dictionary<string, List<(ulong, ulong)>>> FetchRandAccounts()
         {
             Dictionary<string, List<(ulong, ulong)>> randSellers = new Dictionary<string, List<(ulong, ulong)>>();
 
             foreach (string creatorAddress in this.CreatorAddresses)
             {
-                string randEndpoint = "https://www.randswap.com/v1/listings/creator/" + creatorAddress + "?token=Wes_WQWN44UHDGUsld8n0M6OSorH8sl645PD";
+                string randEndpoint = "https://www.randswap.com/v1/listings/creator/" + creatorAddress + "?token=" + randToken;
 
                 string jsonResponse = await HttpClient.GetStringAsync(randEndpoint);
                 List<RandListing> listings = JsonConvert.DeserializeObject<List<RandListing>>(jsonResponse);
@@ -134,6 +176,14 @@ namespace Airdrop.AirdropFactories.Holdings
 
             return sellers;
         }
+    }
+
+    class AlandiaListing
+    {
+        [JsonProperty("asset_id")]
+        public ulong AssetId { get; set; }
+        [JsonProperty("wallet")]
+        public string SellerAddress { get; set; }
     }
 
     class RandListing

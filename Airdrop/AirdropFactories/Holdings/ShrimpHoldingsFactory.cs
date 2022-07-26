@@ -1,4 +1,5 @@
 ﻿using Algorand.V2.Indexer.Model;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Airdrop.AirdropFactories.Holdings
     {
         private readonly ICosmos cosmos;
 
-        public ShrimpHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, httpClientFactory.CreateClient())
+        public ShrimpHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, config, httpClientFactory.CreateClient())
         {
             this.DropAssetId = 360019122;
             this.Decimals = 0;
@@ -58,7 +59,10 @@ namespace Airdrop.AirdropFactories.Holdings
             var accounts = await FetchAccounts();
             IDictionary<string, List<(ulong, ulong)>> randAccounts = await FetchRandAccounts();
             IDictionary<string, List<(ulong, ulong)>> ab2Accounts = await FetchAb2Accounts();
+            IDictionary<string, List<(ulong, ulong)>> alandiaAccounts = await FetchAlandiaAccounts();
             IDictionary<string, List<(ulong, ulong)>> algoxAccounts = await FetchAlgoxAccounts();
+
+            Console.WriteLine(alandiaAccounts.Count());
 
             AirdropUnitCollectionManager collectionManager = new AirdropUnitCollectionManager();
 
@@ -67,6 +71,11 @@ namespace Airdrop.AirdropFactories.Holdings
                 AddAssetsInAccount(collectionManager, account, assetValues);
 
                 string address = account.Address;
+
+                if (alandiaAccounts.ContainsKey(address))
+                {
+                    AddAssetsInList(collectionManager, address, alandiaAccounts[address], assetValues);
+                }
 
                 if (randAccounts.ContainsKey(address))
                 {

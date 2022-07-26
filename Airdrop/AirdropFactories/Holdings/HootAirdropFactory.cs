@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,7 +14,7 @@ namespace Airdrop.AirdropFactories.Holdings
     public class HootAirdropFactory : ExchangeHoldingsAirdropFactory
     {
         public ICosmos Cosmos { get; }
-        public HootAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IHttpClientFactory httpClient) : base(indexerUtils, algodUtils, httpClient.CreateClient())
+        public HootAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClient) : base(indexerUtils, algodUtils, config, httpClient.CreateClient())
         {
             this.Cosmos = cosmos;
             this.DropAssetId = 797382233;
