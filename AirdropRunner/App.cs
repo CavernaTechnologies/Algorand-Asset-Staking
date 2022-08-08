@@ -19,6 +19,7 @@ using Utils.Indexer;
 using Utils.KeyManagers;
 using Transaction = Algorand.Transaction;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace AirdropRunner
 {
@@ -28,15 +29,17 @@ namespace AirdropRunner
         private readonly IAlgodUtils algodUtils;
         private readonly IIndexerUtils indexerUtils;
         private readonly ICosmos cosmos;
+        private readonly IConfiguration config;
         private readonly IKeyManager keyManager;
         private readonly IHttpClientFactory httpClientFactory;
 
-        public App(ILogger<App> logger, IAlgodUtils algodUtils, IIndexerUtils indexerUtils, ICosmos cosmos, IKeyManager keyManager, IHttpClientFactory httpClientFactory)
+        public App(ILogger<App> logger, IAlgodUtils algodUtils, IIndexerUtils indexerUtils, ICosmos cosmos, IConfiguration config, IKeyManager keyManager, IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
             this.algodUtils = algodUtils;
             this.indexerUtils = indexerUtils;
             this.cosmos = cosmos;
+            this.config = config;
             this.keyManager = keyManager;
             this.httpClientFactory = httpClientFactory;
         }
@@ -83,7 +86,7 @@ namespace AirdropRunner
 
             IEnumerable<AirdropUnitCollection> collections = manager.GetAirdropUnitCollections();*/
 
-            var fact = new AlvaHoldingsFactory(indexerUtils, algodUtils);
+            var fact = new HighHogHoldingsFactory(indexerUtils, algodUtils, config, httpClientFactory);
             var collections = await fact.FetchAirdropUnitCollections();
 
             foreach (AirdropUnitCollection collection in collections.OrderByDescending(a => a.Total))
