@@ -17,7 +17,7 @@ namespace Airdrop.AirdropFactories.Holdings
             this.CreatorAddresses = new string[] { "IEQGNR7DPQ26ZY7A22VHRTLHDL2PZ3XD5AUMMEEPYB6DUL6FSRN2NUUWPE" };
             this.RevokedAddresses = new string[] { "IEQGNR7DPQ26ZY7A22VHRTLHDL2PZ3XD5AUMMEEPYB6DUL6FSRN2NUUWPE" };
             this.RevokedAssets = new ulong[] { };
-            this.AssetValue = 1;
+            this.AssetValue = 10;
             this.SearchRand = true;
         }
     }
