@@ -201,6 +201,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
             assetValues[781050181] = 110;
             assetValues[793590644] = 110;
+            assetValues[826108477] = 110;
 
             return assetValues;
         }
