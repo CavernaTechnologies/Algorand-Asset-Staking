@@ -34,6 +34,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 "pixel-geko",
                 "gekofam",
                 "99-wise-uncles",
+                "moofys"
             };
         }
 
@@ -65,7 +66,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
-            IEnumerable<AssetValue> values = await cosmos.GetAssetValues("Gekofam");
+            IEnumerable<AssetValue> values = await cosmos.GetAssetValues("Gekofam", "mOOfy");
 
             foreach (AssetValue av in values)
             {
