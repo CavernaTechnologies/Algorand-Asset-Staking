@@ -8,13 +8,14 @@ namespace Airdrop
         public ulong DropAssetId { get; }
         public ulong Total { get => this.GetTotal(); }
         public ConcurrentBag<AirdropUnit> airdropUnits;
-        public AirdropUnitCollectionModifier modifier;
+        public ConcurrentBag<AirdropModifier> modifiers;
 
         public AirdropUnitCollection(string wallet, ulong dropAssetId)
         {
             this.Wallet = wallet;
             this.DropAssetId = dropAssetId;
             this.airdropUnits = new ConcurrentBag<AirdropUnit>();
+            this.modifiers = new ConcurrentBag<AirdropModifier>();
         }
 
         public AirdropUnitCollection((string, ulong) infoTuple) : this(infoTuple.Item1, infoTuple.Item2) { }
@@ -31,9 +32,9 @@ namespace Airdrop
             this.airdropUnits.Add(airdropUnit);
         }
 
-        public void AddModifier(AirdropUnitCollectionModifier modifier)
+        public void AddModifier(AirdropModifier modifier)
         {
-            this.modifier = modifier;
+            this.modifiers.Add(modifier);
         }
 
         public ulong GetTotal()
@@ -45,9 +46,16 @@ namespace Airdrop
                 total += airdropUnit.GetTotal();
             }
 
-            if (this.modifier != null)
+            double modTotal = 0;
+
+            foreach (AirdropModifier modifier in this.modifiers)
             {
-                total = (ulong)(total * modifier.GetModifier());
+                modTotal += modifier.GetModifier();
+            }
+
+            if (modTotal != 0)
+            {
+                total = (ulong)(total * (1 + modTotal));
             }
 
             return total;
@@ -62,9 +70,9 @@ namespace Airdrop
         {
             string collectionBreakdown = $"{this.Wallet} : {this.DropAssetId} : {this.Total}";
 
-            if (this.modifier != null)
+            foreach (AirdropModifier modifier in this.modifiers)
             {
-                collectionBreakdown += $"\n\tModifier: {this.modifier.SourceAssetId} : {this.modifier.NumberOfSourceAsset} : {this.modifier.GetModifier()}";
+                collectionBreakdown += $"\n\tModifier: {modifier.SourceAssetId} : {modifier.NumberOfSourceAsset} : {modifier.GetModifier()}";
             }
 
             foreach (AirdropUnit airdropUnit in this.airdropUnits)

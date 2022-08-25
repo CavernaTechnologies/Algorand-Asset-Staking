@@ -34,6 +34,8 @@ namespace Airdrop.AirdropFactories.Holdings
             powerToValue[17] = 22500;
             powerToValue[18] = 47500;
 
+            ulong foilValue = 55000;
+
 
             ulong[] endingDigits;
             DateTime t = DateTime.Now;
@@ -77,9 +79,17 @@ namespace Airdrop.AirdropFactories.Holdings
                             if (obj.standard == "arc69")
                             {
                                 int power = (int)obj.properties.Power;
+                                string background = (string)obj.properties.Background;
                                 if (power > 10)
                                 {
-                                    assetValues[id] = powerToValue[power];
+                                    if (background.StartsWith("Foil"))
+                                    {
+                                        assetValues[id] = foilValue;
+                                    }
+                                    else
+                                    {
+                                        assetValues[id] = powerToValue[power];
+                                    }
                                 }
                             }
                             else
@@ -99,7 +109,46 @@ namespace Airdrop.AirdropFactories.Holdings
             return assetValues;
         }
 
-        public override void AddAssetsInAccount(AirdropUnitCollectionManager collectionManager, Account account, IDictionary<ulong, ulong> assetValues)
+        public async Task<IDictionary<ulong, double>> FetchModifiers()
+        {
+            Dictionary<ulong, double> modifiers = new Dictionary<ulong, double>();
+            modifiers[555593804] = .025;
+
+            var txns = await IndexerUtils.GetTransactions(this.CreatorAddresses[0], txType: Algorand.V2.Indexer.Model.TxType.Acfg);
+
+            foreach (var txn in txns)
+            {
+                if (txn?.CreatedAssetIndex != null)
+                {
+                    ulong id = (ulong)txn.CreatedAssetIndex;
+                    dynamic obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(txn.Note));
+                    try
+                    {
+                        if (obj.standard == "arc69")
+                        {
+                            string background = (string)obj.properties.Background;
+                            if (background.StartsWith("Foil"))
+                            {
+                                modifiers[id] = .005;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed on " + id);
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Failed on " + id);
+                    }
+
+                }
+            }
+
+            return modifiers;
+        }
+
+        public void AddAssetsInAccount(AirdropUnitCollectionManager collectionManager, Account account, IDictionary<ulong, ulong> assetValues, IDictionary<ulong, double> modifiers)
         {
             IEnumerable<AssetHolding> assetHoldings = account.Assets;
 
@@ -110,16 +159,18 @@ namespace Airdrop.AirdropFactories.Holdings
                     ulong sourceAssetId = asset.AssetId;
                     ulong numberOfSourceAsset = asset.Amount;
 
-                    if (sourceAssetId == 555593804 && numberOfSourceAsset > 0)
+                    if (modifiers.ContainsKey(sourceAssetId) && numberOfSourceAsset > 0)
                     {
-                        collectionManager.AddModifier(new AirdropUnitCollectionModifier(
+                        double value = modifiers[sourceAssetId];
+                        collectionManager.AddModifier(new AirdropModifier(
                             account.Address,
                             this.DropAssetId,
                             sourceAssetId,
-                            .025,
+                            value,
                             numberOfSourceAsset: numberOfSourceAsset));
                     }
-                    else if (assetValues.ContainsKey(sourceAssetId) && numberOfSourceAsset > 0)
+                    
+                    if (assetValues.ContainsKey(sourceAssetId) && numberOfSourceAsset > 0)
                     {
                         ulong assetValue = assetValues[sourceAssetId];
                         collectionManager.AddAirdropUnit(new AirdropUnit(
@@ -132,6 +183,22 @@ namespace Airdrop.AirdropFactories.Holdings
                     }
                 }
             }
+        }
+
+        public override async Task<IEnumerable<AirdropUnitCollection>> FetchAirdropUnitCollections()
+        {
+            IDictionary<ulong, ulong> assetValues = await FetchAssetValues();
+            IDictionary<ulong, double> modifiers = await FetchModifiers();
+            IEnumerable<Account> accounts = await FetchAccounts();
+
+            AirdropUnitCollectionManager collectionManager = new AirdropUnitCollectionManager();
+
+            Parallel.ForEach(accounts, new ParallelOptions { MaxDegreeOfParallelism = 10 }, account =>
+            {
+                AddAssetsInAccount(collectionManager, account, assetValues, modifiers);
+            });
+
+            return collectionManager.GetAirdropUnitCollections();
         }
     }
 }

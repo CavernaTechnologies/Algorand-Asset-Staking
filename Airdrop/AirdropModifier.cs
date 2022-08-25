@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Airdrop
 {
-    public class AirdropUnitCollectionModifier
+    public class AirdropModifier
     {
         public string Address { get; set; }
         public ulong DropAssetId { get; set; }
@@ -12,7 +12,7 @@ namespace Airdrop
         public ulong NumberOfSourceAsset { get; set; }
         public double Value { get; set; }
 
-        public AirdropUnitCollectionModifier(string address, ulong dropAssetId, ulong sourceAssetId, double value, ulong numberOfSourceAsset)
+        public AirdropModifier(string address, ulong dropAssetId, ulong sourceAssetId, double value, ulong numberOfSourceAsset)
         {
             this.Address = address;
             this.DropAssetId = dropAssetId;
@@ -23,7 +23,7 @@ namespace Airdrop
 
         public double GetModifier()
         {
-            return 1 + this.Value * this.NumberOfSourceAsset;
+            return this.Value * this.NumberOfSourceAsset;
         }
     }
 }

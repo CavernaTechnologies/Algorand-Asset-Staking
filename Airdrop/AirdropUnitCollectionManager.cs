@@ -27,7 +27,7 @@ namespace Airdrop
             }
         }
 
-        public void AddModifier(AirdropUnitCollectionModifier modifier)
+        public void AddModifier(AirdropModifier modifier)
         {
             (string, ulong) key = (modifier.Address, modifier.DropAssetId);
 
@@ -60,7 +60,7 @@ namespace Airdrop
 
         public IEnumerable<AirdropUnitCollection> GetAirdropUnitCollections()
         {
-            return this.collectionDict.Values;
+            return this.collectionDict.Values.Where(c => c.GetTotal() > 0);
         }
     }
 
