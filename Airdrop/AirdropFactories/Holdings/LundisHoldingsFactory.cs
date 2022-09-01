@@ -20,6 +20,9 @@ namespace Airdrop.AirdropFactories.Holdings
                 "PFDZQWMRT2KTJTB3VUGDOILNCNSB63ILZL4XMBHYECBOV24LGTID4YRFPM",
                 "7PVEEP2CS77VJEYZGW2IIGZ63P5CO557XRNKBRPTIREKLET7A4G62W4CQA",
                 "TXZ3AKZLIKNNT3OBQOMTSYWC7AK7CIVSZZIDCSTONXNTX44LQIRU6ELFDA",
+                "UB6E3ACF7MHSAY5LRRNUHMW55IAQGGWOVADTVDNMF7JL7CA25GO7V4F2MI",
+                "ONYCV746UXUU337323KNMNCAMZ5YLC6U5KLTOAFD5AVDDRMYVDOJHXMSVQ",
+                "KEFVKQAEKQBFHS5UJMC3JL7OSODFIEBYRAYXDXL5UL4WEBHSVMB2EBITP4"
             };
             this.RevokedAssets = new ulong[]
             {
@@ -31,14 +34,68 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 "LUNDIW5HP5KWUG6JTXHMDB5XPNXQ43OIBXET3RTBXNVJISQUTBKWONTGNI",
             };
-            this.AssetValue = 50;
+            this.AssetValue = 10;
         }
 
         public override async Task<IDictionary<ulong, ulong>> FetchAssetValues()
         {
             Dictionary<ulong, ulong> assetValues = new Dictionary<ulong, ulong>();
 
-            foreach (string creatorAddress in this.CreatorAddresses)
+            ulong tier3 = 1250;
+            ulong tier2 = 500;
+            ulong tier1 = 200;
+            ulong notier = 75;
+            ulong statepoof = 30;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Take(3))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+
+                if (this.RevokedAddresses != null)
+                {
+                    foreach (var asset in assets)
+                    {
+                        if (!this.RevokedAssets.Contains(asset.Index))
+                        {
+                            assetValues.Add(asset.Index, notier);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var asset in assets)
+                    {
+                        assetValues.Add(asset.Index, notier);
+                    }
+                }
+            }
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(3).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+
+                if (this.RevokedAddresses != null)
+                {
+                    foreach (var asset in assets)
+                    {
+                        if (!this.RevokedAssets.Contains(asset.Index))
+                        {
+                            assetValues.Add(asset.Index, statepoof);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var asset in assets)
+                    {
+                        assetValues.Add(asset.Index, statepoof);
+                    }
+                }
+            }
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(4).Take(2))
             {
                 Account account = await this.AlgodUtils.GetAccount(creatorAddress);
                 var assets = account.CreatedAssets;
@@ -62,146 +119,147 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
-            //750 Assets
+            //tier3 Assets
 
-            assetValues[698467453] = 750;
-            assetValues[698480336] = 750;
-            assetValues[698488421] = 750;
-            assetValues[698494814] = 750;
-            assetValues[698501141] = 750;
+            assetValues[698467453] = tier3;
+            assetValues[698480336] = tier3;
+            assetValues[698488421] = tier3;
+            assetValues[698494814] = tier3;
+            assetValues[698501141] = tier3;
             
-            assetValues[698507762] = 750;
-            assetValues[698517704] = 750;
-            assetValues[698526609] = 750;
-            assetValues[698547096] = 750;
-            assetValues[698657815] = 750;
+            assetValues[698507762] = tier3;
+            assetValues[698517704] = tier3;
+            assetValues[698526609] = tier3;
+            assetValues[698547096] = tier3;
+            assetValues[698657815] = tier3;
 
-            assetValues[698686953] = 750;
-            assetValues[698533302] = 750;
-            assetValues[704110764] = 750;
-            assetValues[704128153] = 750;
-            assetValues[708924844] = 750;
+            assetValues[698686953] = tier3;
+            assetValues[698533302] = tier3;
+            assetValues[704110764] = tier3;
+            assetValues[704128153] = tier3;
+            assetValues[708924844] = tier3;
             
-            assetValues[708965058] = 750;
-            assetValues[708948058] = 750;
-            assetValues[708969228] = 750;
-            assetValues[709016655] = 750;
-            assetValues[721243915] = 750;
+            assetValues[708965058] = tier3;
+            assetValues[708948058] = tier3;
+            assetValues[708969228] = tier3;
+            assetValues[709016655] = tier3;
+            assetValues[721243915] = tier3;
 
-            assetValues[721176809] = 750;
-            assetValues[721195331] = 750;
-            assetValues[721204629] = 750;
-            assetValues[721225594] = 750;
-            assetValues[721235002] = 750;
+            assetValues[721176809] = tier3;
+            assetValues[721195331] = tier3;
+            assetValues[721204629] = tier3;
+            assetValues[721225594] = tier3;
+            assetValues[721235002] = tier3;
 
-            assetValues[721322235] = 750;
-            assetValues[739133725] = 750;
-            assetValues[737750442] = 750;
-            assetValues[737756951] = 750;
-            assetValues[737762728] = 750;
+            assetValues[721322235] = tier3;
+            assetValues[739133725] = tier3;
+            assetValues[737750442] = tier3;
+            assetValues[737756951] = tier3;
+            assetValues[737762728] = tier3;
 
-            assetValues[737769615] = 750;
-            assetValues[737778187] = 750;
-            assetValues[737784336] = 750;
-            assetValues[756545371] = 750;
-            assetValues[762227028] = 750;
+            assetValues[737769615] = tier3;
+            assetValues[737778187] = tier3;
+            assetValues[737784336] = tier3;
+            assetValues[756545371] = tier3;
+            assetValues[762227028] = tier3;
 
-            assetValues[762232337] = 750;
-            assetValues[762205371] = 750;
-            assetValues[762236867] = 750;
-            assetValues[762213644] = 750;
-            assetValues[762221228] = 750;
+            assetValues[762232337] = tier3;
+            assetValues[762205371] = tier3;
+            assetValues[762236867] = tier3;
+            assetValues[762213644] = tier3;
+            assetValues[762221228] = tier3;
 
-            assetValues[773081051] = 750;
-            assetValues[773114659] = 750;
-            assetValues[773085590] = 750;
-            assetValues[785720995] = 750;
-            assetValues[798634710] = 750;
+            assetValues[773081051] = tier3;
+            assetValues[773114659] = tier3;
+            assetValues[773085590] = tier3;
+            assetValues[785720995] = tier3;
+            assetValues[798634710] = tier3;
 
-            assetValues[798642989] = 750;
-            assetValues[798638793] = 750;
-            assetValues[798830332] = 750;
-            assetValues[799367574] = 750;
-            assetValues[806274588] = 750;
+            assetValues[798642989] = tier3;
+            assetValues[798638793] = tier3;
+            assetValues[798830332] = tier3;
+            assetValues[799367574] = tier3;
+            assetValues[806274588] = tier3;
 
-            assetValues[809304789] = 750;
-            assetValues[819535209] = 750;
-            assetValues[819551980] = 750;
-            assetValues[821756365] = 750;
-            assetValues[835274204] = 750;
+            assetValues[809304789] = tier3;
+            assetValues[819535209] = tier3;
+            assetValues[819551980] = tier3;
+            assetValues[821756365] = tier3;
+            assetValues[835274204] = tier3;
 
-            assetValues[833585953] = 750;
-            assetValues[835493754] = 750;
-            assetValues[837340710] = 750;
-            assetValues[837345892] = 750;
-            assetValues[838391718] = 750;
+            assetValues[833585953] = tier3;
+            assetValues[835493754] = tier3;
+            assetValues[837340710] = tier3;
+            assetValues[837345892] = tier3;
+            assetValues[838391718] = tier3;
 
-            assetValues[838148671] = 750;
-            assetValues[839144345] = 750;
+            assetValues[838148671] = tier3;
+            assetValues[839144345] = tier3;
+            assetValues[798830332] = tier3;
 
-            //325 Assets
+            //tier2 Assets
 
-            assetValues[749820378] = 325;
-            assetValues[750010095] = 325;
-            assetValues[750142642] = 325;
-            assetValues[750934239] = 325;
-            assetValues[751553397] = 325;
+            assetValues[749820378] = tier2;
+            assetValues[750010095] = tier2;
+            assetValues[750142642] = tier2;
+            assetValues[750934239] = tier2;
+            assetValues[751553397] = tier2;
 
-            assetValues[751865805] = 325;
-            assetValues[752200818] = 325;
-            assetValues[752945710] = 325;
-            assetValues[752948741] = 325;
-            assetValues[752961942] = 325;
+            assetValues[751865805] = tier2;
+            assetValues[752200818] = tier2;
+            assetValues[752945710] = tier2;
+            assetValues[752948741] = tier2;
+            assetValues[752961942] = tier2;
 
-            assetValues[753873322] = 325;
-            assetValues[773072296] = 325;
-            assetValues[773063834] = 325;
-            assetValues[781054741] = 325;
-            assetValues[793585294] = 325;
+            assetValues[753873322] = tier2;
+            assetValues[773072296] = tier2;
+            assetValues[773063834] = tier2;
+            assetValues[781054741] = tier2;
+            assetValues[793585294] = tier2;
 
-            assetValues[804514128] = 325;
-            assetValues[811020055] = 325;
-            assetValues[812192148] = 325;
-            assetValues[812194599] = 325;
-            assetValues[819515831] = 325;
+            assetValues[804514128] = tier2;
+            assetValues[811020055] = tier2;
+            assetValues[812192148] = tier2;
+            assetValues[812194599] = tier2;
+            assetValues[819515831] = tier2;
 
-            assetValues[819518789] = 325;
-            assetValues[835364862] = 325;
-            assetValues[835366017] = 325;
-            assetValues[835370994] = 325;
-            assetValues[835367463] = 325;
+            assetValues[819518789] = tier2;
+            assetValues[835364862] = tier2;
+            assetValues[835366017] = tier2;
+            assetValues[835370994] = tier2;
+            assetValues[835367463] = tier2;
 
-            assetValues[835371877] = 325;
+            assetValues[835371877] = tier2;
 
             //110 Assets
 
-            assetValues[684438622] = 110;
-            assetValues[687582413] = 110;
-            assetValues[687573278] = 110;
-            assetValues[687578619] = 110;
-            assetValues[687591588] = 110;
+            assetValues[684438622] = tier1;
+            assetValues[687582413] = tier1;
+            assetValues[687573278] = tier1;
+            assetValues[687578619] = tier1;
+            assetValues[687591588] = tier1;
 
-            assetValues[687610963] = 110;
-            assetValues[687614444] = 110;
-            assetValues[687597589] = 110;
-            assetValues[697453848] = 110;
-            assetValues[689652667] = 110;
+            assetValues[687610963] = tier1;
+            assetValues[687614444] = tier1;
+            assetValues[687597589] = tier1;
+            assetValues[697453848] = tier1;
+            assetValues[689652667] = tier1;
 
-            assetValues[713165860] = 110;
-            assetValues[713170980] = 110;
-            assetValues[713173804] = 110;
-            assetValues[741026307] = 110;
-            assetValues[752998901] = 110;
+            assetValues[713165860] = tier1;
+            assetValues[713170980] = tier1;
+            assetValues[713173804] = tier1;
+            assetValues[741026307] = tier1;
+            assetValues[752998901] = tier1;
 
-            assetValues[753002063] = 110;
-            assetValues[756517824] = 110;
-            assetValues[756520037] = 110;
-            assetValues[760062139] = 110;
-            assetValues[760057914] = 110;
+            assetValues[753002063] = tier1;
+            assetValues[756517824] = tier1;
+            assetValues[756520037] = tier1;
+            assetValues[760062139] = tier1;
+            assetValues[760057914] = tier1;
 
-            assetValues[781050181] = 110;
-            assetValues[793590644] = 110;
-            assetValues[826108477] = 110;
+            assetValues[781050181] = tier1;
+            assetValues[793590644] = tier1;
+            assetValues[826108477] = tier1;
 
             return assetValues;
         }
