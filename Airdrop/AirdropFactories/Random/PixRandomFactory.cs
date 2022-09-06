@@ -14,7 +14,7 @@ namespace Airdrop.AirdropFactories.Random
             this.Decimals = 0;
             this.CreatorAddresses = new string[] { "PIXSQBMSKAK4ZB4SEZJEOOMB72RI75CNW2DCQ3BCFHQWK3SIQYUB2G5HGA" };
             this.NumberOfWinners = 200;
-            this.TotalWinnings = 200000;
+            this.TotalWinnings = 250000;
         }
     }
 }
