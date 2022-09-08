@@ -86,7 +86,7 @@ namespace AirdropRunner
 
             IEnumerable<AirdropUnitCollection> collections = manager.GetAirdropUnitCollections();*/
 
-            var fact = new HighHogHoldingsFactory(indexerUtils, algodUtils, config, httpClientFactory);
+            var fact = new HootAirdropFactory(indexerUtils, algodUtils, cosmos);
             var collections = await fact.FetchAirdropUnitCollections();
 
             foreach (AirdropUnitCollection collection in collections.OrderByDescending(a => a.Total))
