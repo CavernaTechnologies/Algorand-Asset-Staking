@@ -11,10 +11,10 @@ using Utils.Indexer;
 
 namespace Airdrop.AirdropFactories.Holdings
 {
-    public class HootAirdropFactory : ExchangeHoldingsAirdropFactory
+    public class HootAirdropFactory : HoldingsAirdropFactory
     {
         public ICosmos Cosmos { get; }
-        public HootAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos, IConfiguration config, IHttpClientFactory httpClient) : base(indexerUtils, algodUtils, config, httpClient.CreateClient())
+        public HootAirdropFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, ICosmos cosmos) : base(indexerUtils, algodUtils)
         {
             this.Cosmos = cosmos;
             this.DropAssetId = 797382233;
@@ -26,14 +26,6 @@ namespace Airdrop.AirdropFactories.Holdings
                 "AOWLDAJSAIHNR4J2TKB4U32Z73O7W52JGJUGUR5RW6ZH46G3ET4IFNNGQ4",
                 "OWLETS3KHONGNL5V2WGRY7FLOUE7NGC3CXA7PY3PJZXSXMBMFICGBUJGQA"
             };
-            this.AlgoxCollectionNames = new string[]
-            {
-                "algo-owl",
-                "the-parliament-of-aowls",
-                "baby-hoot-group"
-            };
-            this.SearchAlgox = true;
-            this.SearchRand = true;
         }
 
         public async override Task<IDictionary<ulong, ulong>> FetchAssetValues()
