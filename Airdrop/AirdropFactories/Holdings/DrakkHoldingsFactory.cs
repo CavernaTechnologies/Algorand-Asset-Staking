@@ -31,9 +31,9 @@ namespace Airdrop.AirdropFactories.Holdings
             IEnumerable<AssetValue> assets = await cosmos.GetAssetValues("Drakk");
 
             Dictionary<ulong, ulong> assetValues = assets.ToDictionary(av => av.AssetId, av => (ulong) (av.Value * Math.Pow(10, this.Decimals)));
-            assetValues[572918686] = 2;
-            assetValues[776390976] = 2;
-            assetValues[776405295] = 2;
+            assetValues[572918686] = 1;
+            assetValues[776390976] = 1;
+            assetValues[776405295] = 1;
 
             return assetValues;
         }
