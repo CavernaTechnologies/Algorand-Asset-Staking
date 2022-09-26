@@ -83,6 +83,7 @@ namespace AirdropRunner
             await new PyreneesPartnerFactory(indexerUtils, algodUtils, acorn).FetchAirdropUnitCollections(manager, accounts);
             await new CorvusPartnerFactory(indexerUtils, algodUtils, acorn).FetchAirdropUnitCollections(manager, accounts);
             await new AlgorillaPartnerFactory(indexerUtils, algodUtils, acorn).FetchAirdropUnitCollections(manager, accounts);
+            await new PuffinPartnerFactory(indexerUtils, algodUtils, acorn).FetchAirdropUnitCollections(manager, accounts);
 
             IEnumerable<AirdropUnitCollection> collections = manager.GetAirdropUnitCollections();*/
 
