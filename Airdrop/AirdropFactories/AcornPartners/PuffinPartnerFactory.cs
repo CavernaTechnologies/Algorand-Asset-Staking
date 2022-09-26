@@ -25,6 +25,7 @@ namespace Airdrop.AirdropFactories.AcornPartners
                 "VX7HS4LUA6HOAMOIK4J2Z2MWJPLDADBXVLXHOVOPFO2CGXBIP2LLXZC4R4",
                 "X5GD3CDDSXZCIAPKKXQOWDTHDN32NP6KAZOZXFFRE625TPUND33ZCOIJCM"
             };
+            this.RevokedAssets = new ulong[] { };
         }
     }
 }
