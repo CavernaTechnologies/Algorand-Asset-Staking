@@ -206,6 +206,8 @@ namespace Airdrop.AirdropFactories.Holdings
             assetValues[862381532] = tier3;
             assetValues[867796704] = tier3;
 
+            assetValues[879781046] = tier3;
+
             //tier2 Assets
 
             assetValues[749820378] = tier2;
