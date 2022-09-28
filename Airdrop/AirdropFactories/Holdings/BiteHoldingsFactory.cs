@@ -40,20 +40,10 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 Account account = await this.AlgodUtils.GetAccount(creatorAddress);
                 var assets = account.CreatedAssets;
-
-                if (this.RevokedAddresses != null)
+                
+                foreach (var asset in assets)
                 {
-                    foreach (var asset in assets)
-                    {
-                        if (!this.RevokedAssets.Contains(asset.Index))
-                        {
-                            assetValues.Add(asset.Index, 333);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var asset in assets)
+                    if (asset.Params.UnitName.StartsWith("POPY"))
                     {
                         assetValues.Add(asset.Index, 333);
                     }
@@ -65,19 +55,9 @@ namespace Airdrop.AirdropFactories.Holdings
                 Account account = await this.AlgodUtils.GetAccount(creatorAddress);
                 var assets = account.CreatedAssets;
 
-                if (this.RevokedAddresses != null)
+                foreach (var asset in assets)
                 {
-                    foreach (var asset in assets)
-                    {
-                        if (!this.RevokedAssets.Contains(asset.Index))
-                        {
-                            assetValues.Add(asset.Index, 666);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var asset in assets)
+                    if (asset.Params.UnitName.StartsWith("GNF-"))
                     {
                         assetValues.Add(asset.Index, 666);
                     }

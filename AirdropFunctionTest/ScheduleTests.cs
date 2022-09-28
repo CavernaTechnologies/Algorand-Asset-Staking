@@ -76,5 +76,17 @@ namespace FunctionTest
         {
             Assert.Equal("0 0 19 * * Fri", Function.BuzzyBeeHoldingsAirdropSchedule);
         }
+
+        [Fact]
+        public void BrontoHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 21 * * Wed", Function.BrontoHoldingsAirdropSchedule);
+        }
+
+        [Fact]
+        public void BiteHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 0 * * Thu", Function.BiteHoldingsAirdropSchedule);
+        }
     }
 }
