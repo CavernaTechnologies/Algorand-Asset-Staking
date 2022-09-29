@@ -74,6 +74,8 @@ namespace Airdrop.AirdropFactories.Holdings
                 assetValues.Add(av.AssetId, av.Value);
             }
 
+            assetValues[868148864] = 12;
+
             return assetValues;
         }
     }
