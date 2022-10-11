@@ -48,7 +48,7 @@ namespace AirdropRunner
         {
             Key key = keyManager.CavernaWallet;
 
-            /*ulong acorn = 50000;
+            /*ulong acorn = 20000;
 
             var fact = new GoannaPartnerFactory(indexerUtils, algodUtils, acorn);
 
@@ -87,7 +87,7 @@ namespace AirdropRunner
 
             IEnumerable<AirdropUnitCollection> collections = manager.GetAirdropUnitCollections();*/
 
-            var fact = new HootAirdropFactory(indexerUtils, algodUtils, cosmos);
+            var fact = new LundisHoldingsFactory(indexerUtils, algodUtils);
             var collections = await fact.FetchAirdropUnitCollections();
 
             foreach (AirdropUnitCollection collection in collections.OrderByDescending(a => a.Total))

@@ -37,7 +37,10 @@ namespace Airdrop.AirdropFactories.AcornPartners
 
             foreach (Account account in accounts)
             {
-                if (!this.RevokedAddresses.Contains(account.Address))
+                if (this.RevokedAddresses != null && !this.RevokedAddresses.Contains(account.Address))
+                {
+                    eligibleWinners.AddRange(this.GetEligibleWinners(account, assetIds));
+                } else
                 {
                     eligibleWinners.AddRange(this.GetEligibleWinners(account, assetIds));
                 }
