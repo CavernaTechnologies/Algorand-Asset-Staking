@@ -76,6 +76,15 @@ namespace Airdrop.AirdropFactories.Holdings
 
             assetValues[868148864] = 12;
 
+            assetValues[895360101] = 6;
+            assetValues[895360535] = 6;
+            assetValues[895365119] = 6;
+            assetValues[895367331] = 6;
+
+            assetValues[895363550] = 12;
+            assetValues[895368433] = 24;
+            assetValues[895366019] = 24;
+
             return assetValues;
         }
     }
