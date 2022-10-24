@@ -47,7 +47,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 var assets = account.CreatedAssets;
                 foreach (var asset in assets)
                 {
-                    assetValues.Add(asset.Index, 15);
+                    assetValues.Add(asset.Index, 50);
                 }
             }
 
@@ -57,7 +57,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 var assets = account.CreatedAssets;
                 foreach (var asset in assets)
                 {
-                    assetValues.Add(asset.Index, 50);
+                    assetValues.Add(asset.Index, 15);
                 }
             }
 
@@ -67,6 +67,9 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 assetValues[id] = 400;
             }
+
+            assetValues.Remove(755007963);
+            assetValues.Remove(721340445);
 
             return assetValues;
         }
