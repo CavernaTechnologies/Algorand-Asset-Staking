@@ -25,17 +25,19 @@ namespace Airdrop.AirdropFactories.Holdings
                 "PXGKTWC67EQAJJZX2J22WU6PWUGJGOXNF3Q3KDABHLXTP6P336G4CMF2WI",
                 "PXGKO3GQXYKAVNKOFKFIMZLZJE3I3VHYALIU7MHT3CELM4I4JJC4XVNY7M",
                 "WISEUJP5PIFAOWYDEVIDWQLKEQFTOSG3ADHE7NJYEAQNFXV5I2R7YLLBQQ",
+                "K7ZA75X6HZDN5ENOWQYT4Y7PVM6T7YYPKVOI6ZT6H3TEHCA3MBNPODN2TI",
                 "DDYUZA46ZXAJICQMSYIKG3SWNKZND6C5VEH57YVJAV47NDYM3BMDKAC3LQ",
-                "K7ZA75X6HZDN5ENOWQYT4Y7PVM6T7YYPKVOI6ZT6H3TEHCA3MBNPODN2TI"
+                "PCWJPIR4RJMJZNV2WVXIS6UMIBCQ36VYMLFWQROVFXTZGCFG6TYLT4RWVI",
             };
             this.SearchRand = true;
             this.SearchAlgox = true;
             this.AlgoxCollectionNames = new string[]
             {
                 "pixel-geko",
-                "gekofam",
                 "99-wise-uncles",
-                "moofys"
+                "moofys",
+                "gekofam",
+                "mia"
             };
         }
 
@@ -43,7 +45,7 @@ namespace Airdrop.AirdropFactories.Holdings
         {
             Dictionary<ulong, ulong> assetValues = new Dictionary<ulong, ulong>();
 
-            ulong pixValue = 36;
+            ulong pixValue = 72;
 
             foreach (string creatorAddress in this.CreatorAddresses.Take(2))
             {
@@ -55,7 +57,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
-            ulong wuValue = 69;
+            ulong wuValue = 99;
 
             foreach (string creatorAddress in this.CreatorAddresses.Skip(2).Take(1))
             {
@@ -67,23 +69,24 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
-            IEnumerable<AssetValue> values = await cosmos.GetAssetValues("Gekofam", "mOOfy");
+            ulong moofyValue = 48;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(3).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, moofyValue);
+                }
+            }
+
+            IEnumerable<AssetValue> values = await cosmos.GetAssetValues("Gekofam", "mia");
 
             foreach (AssetValue av in values)
             {
                 assetValues.Add(av.AssetId, av.Value);
             }
-
-            assetValues[868148864] = 12;
-
-            assetValues[895360101] = 6;
-            assetValues[895360535] = 6;
-            assetValues[895365119] = 6;
-            assetValues[895367331] = 6;
-
-            assetValues[895363550] = 12;
-            assetValues[895368433] = 24;
-            assetValues[895366019] = 24;
 
             return assetValues;
         }
