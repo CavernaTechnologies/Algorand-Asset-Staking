@@ -207,6 +207,7 @@ namespace Airdrop.AirdropFactories.Holdings
             assetValues[867796704] = tier3;
 
             assetValues[879781046] = tier3;
+            assetValues[931133436] = tier3;
 
             //tier2 Assets
 
@@ -271,6 +272,21 @@ namespace Airdrop.AirdropFactories.Holdings
             assetValues[781050181] = tier1;
             assetValues[793590644] = tier1;
             assetValues[826108477] = tier1;
+
+            // 5 assets
+
+            assetValues[929928221] = 5;
+            assetValues[929928230] = 5;
+            assetValues[929928238] = 5;
+            assetValues[929928239] = 5;
+            assetValues[929928241] = 5;
+            assetValues[929928242] = 5;
+            assetValues[929928277] = 5;
+            assetValues[929928321] = 5;
+            assetValues[929928359] = 5;
+            assetValues[929928396] = 5;
+            assetValues[903239263] = 5;
+            assetValues[907245578] = 5;
 
             return assetValues;
         }
