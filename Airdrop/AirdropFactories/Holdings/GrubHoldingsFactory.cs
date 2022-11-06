@@ -30,6 +30,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 "PCWJPIR4RJMJZNV2WVXIS6UMIBCQ36VYMLFWQROVFXTZGCFG6TYLT4RWVI",
             };
             this.SearchRand = true;
+            this.SearchAlandia = true;
             this.SearchAlgox = true;
             this.AlgoxCollectionNames = new string[]
             {
