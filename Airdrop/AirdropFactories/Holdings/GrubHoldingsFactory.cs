@@ -24,10 +24,22 @@ namespace Airdrop.AirdropFactories.Holdings
             this.CreatorAddresses = new string[] {
                 "PXGKTWC67EQAJJZX2J22WU6PWUGJGOXNF3Q3KDABHLXTP6P336G4CMF2WI",
                 "PXGKO3GQXYKAVNKOFKFIMZLZJE3I3VHYALIU7MHT3CELM4I4JJC4XVNY7M",
+
                 "WISEUJP5PIFAOWYDEVIDWQLKEQFTOSG3ADHE7NJYEAQNFXV5I2R7YLLBQQ",
+
                 "K7ZA75X6HZDN5ENOWQYT4Y7PVM6T7YYPKVOI6ZT6H3TEHCA3MBNPODN2TI",
+
                 "DDYUZA46ZXAJICQMSYIKG3SWNKZND6C5VEH57YVJAV47NDYM3BMDKAC3LQ",
                 "PCWJPIR4RJMJZNV2WVXIS6UMIBCQ36VYMLFWQROVFXTZGCFG6TYLT4RWVI",
+
+                "QTZS73C5IW2LF76EPTD6G5MVCXYKS5WD3AQI2WOMQ3TXEZWFYIR3VJOAEI",
+                "NIQSYSUHA7BW7CVC5HNRJOHFZHJYSAFA6JMLJJD4LV4S4CODGPUUX6HOCA",
+                "NCQFFPYBTWTGGOTECZIWNI5RUIVELYEUKV4HN24DEJUWKPRVIN3CG2VSGI",
+
+                "MNXQMK77MONDGLZQOYQD4F3HGRG6L56FPRNQY3IM2SZOVQWYT33NSWO3LE",
+                "AZCR3TDUWKS2DJS3AWYQ6I7LUA2LRT4CFR2U5WZGXWMZV3RNJURPZYFWBQ",
+
+                "Y6BWPPICS2HYP2KRVZCDASKJHJLBU7EZCA2JFSLMPYGC6FPDLRMF7UMVUQ",
             };
             this.SearchRand = true;
             this.SearchAlandia = true;
@@ -38,7 +50,11 @@ namespace Airdrop.AirdropFactories.Holdings
                 "99-wise-uncles",
                 "moofys",
                 "gekofam",
-                "mia"
+                "mia",
+                "doofy",
+                "dooofy",
+                "algo-rpg-npc",
+                "99-foolish-uncles"
             };
         }
 
@@ -79,6 +95,42 @@ namespace Airdrop.AirdropFactories.Holdings
                 foreach (var asset in assets)
                 {
                     assetValues.Add(asset.Index, moofyValue);
+                }
+            }
+
+            ulong doofyValue = 8;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(6).Take(3))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, doofyValue);
+                }
+            }
+
+            ulong rpgValue = 12;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(9).Take(2))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, rpgValue);
+                }
+            }
+
+            ulong foolishValue = 22;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(11).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, foolishValue);
                 }
             }
 
