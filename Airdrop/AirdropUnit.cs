@@ -8,7 +8,7 @@
         public ulong NumberOfSourceAsset { get; set; }
         public double Value { get; set; }
         public bool IsMultiplied { get; }
-        public ulong Total { get => this.GetTotal(); }
+        public double Total { get => this.GetTotal(); }
 
         public AirdropUnit(string address, ulong dropAssetId, ulong sourceAssetId, double value, ulong numberOfSourceAsset = 1, bool isMultiplied = false)
         {
@@ -20,15 +20,15 @@
             this.IsMultiplied = isMultiplied;
         }
 
-        public ulong GetTotal()
+        public double GetTotal()
         {
             if (this.IsMultiplied)
             {
-                return (ulong)(this.NumberOfSourceAsset * this.Value);
+                return this.NumberOfSourceAsset * this.Value;
             }
             else
             {
-                return (ulong)this.Value;
+                return this.Value;
             }
         }
     }

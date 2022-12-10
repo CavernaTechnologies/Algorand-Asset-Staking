@@ -39,7 +39,7 @@ namespace Airdrop
 
         public ulong GetTotal()
         {
-            ulong total = 0;
+            double total = 0;
 
             foreach (AirdropUnit airdropUnit in this.airdropUnits)
             {
@@ -55,10 +55,10 @@ namespace Airdrop
 
             if (modTotal != 0)
             {
-                total = (ulong)(total * (1 + modTotal));
+                total = total * (1 + modTotal);
             }
 
-            return total;
+            return (ulong)total;
         }
 
         public int Count()
@@ -77,7 +77,7 @@ namespace Airdrop
 
             foreach (AirdropUnit airdropUnit in this.airdropUnits)
             {
-                collectionBreakdown += $"\n\t{airdropUnit.SourceAssetId} : {airdropUnit.NumberOfSourceAsset} : {airdropUnit.Total}";
+                collectionBreakdown += string.Format("\n\t{0} : {1} : {2:0.00}", airdropUnit.SourceAssetId, airdropUnit.NumberOfSourceAsset, airdropUnit.Total);
             }
 
             return collectionBreakdown;
