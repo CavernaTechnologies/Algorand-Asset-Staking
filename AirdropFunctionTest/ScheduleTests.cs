@@ -112,5 +112,17 @@ namespace FunctionTest
         {
             Assert.Equal("0 0 1 * * Mon", Function.GrowHoldingsAirdropSchedule);
         }
+
+        [Fact]
+        public void MagoHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 15 * * Mon", Function.MagoHoldingsAirdropSchedule);
+        }
+
+        [Fact]
+        public void AlgoleaguesHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 23 * * Mon", Function.AlgoleaguesHoldingsAirdropSchedule);
+        }
     }
 }
