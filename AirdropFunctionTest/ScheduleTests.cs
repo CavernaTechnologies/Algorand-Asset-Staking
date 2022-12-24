@@ -122,7 +122,7 @@ namespace FunctionTest
         [Fact]
         public void AlgoleaguesHoldingsAirdropScheduleTest()
         {
-            Assert.Equal("0 0 23 * * Mon", Function.AlgoleaguesHoldingsAirdropSchedule);
+            Assert.Equal("0 0 23 * * Sun", Function.AlgoleaguesHoldingsAirdropSchedule);
         }
     }
 }
