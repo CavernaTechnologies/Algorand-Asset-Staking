@@ -117,7 +117,7 @@ namespace AirdropRunner
                             flatFee: transactionParameters.Fee,
                             firstRound: transactionParameters.LastRound,
                             lastRound: transactionParameters.LastRound + 1000,
-                            note: Encoding.UTF8.GetBytes(collection.ToString().Length < 1024 ? collection.ToString() : "Note too long..."),
+                            note: Encoding.UTF8.GetBytes(collection.ToString().Length < 1000 ? collection.ToString() : "Note too long..."),
                             genesisID: transactionParameters.GenesisId,
                             genesisHash: new Algorand.Digest(transactionParameters.GenesisHash),
                             assetIndex: collection.DropAssetId
