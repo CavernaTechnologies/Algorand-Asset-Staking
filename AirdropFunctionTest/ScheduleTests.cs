@@ -124,5 +124,11 @@ namespace FunctionTest
         {
             Assert.Equal("0 0 23 * * Sun", Function.AlgoleaguesHoldingsAirdropSchedule);
         }
+
+        [Fact]
+        public void BlopHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 13 * * *", Function.BlopHoldingsAirdropSchedule);
+        }
     }
 }
