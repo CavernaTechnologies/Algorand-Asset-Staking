@@ -24,18 +24,6 @@ namespace FunctionTest
         }
 
         [Fact]
-        public void AlchemonHoldingsAirdropScheduleTest()
-        {
-            Assert.Equal("0 0 16 * * Sat", Function.AlchemonHoldingsAirdropSchedule);
-        }
-
-        [Fact]
-        public void AlchemonLiquidityAirdropScheduleTest()
-        {
-            Assert.Equal("0 0 16 * * Sun", Function.AlchemonLiquidityAirdropSchedule);
-        }
-
-        [Fact]
         public void MantisHoldingsAirdropScheduleTest()
         {
             Assert.Equal("0 0 18 * * *", Function.MantisHoldingsAirdropSchedule);
