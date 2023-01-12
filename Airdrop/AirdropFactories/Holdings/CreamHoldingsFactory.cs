@@ -23,18 +23,20 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 "C3GRANDYJXZRIGSDKTQUBRTHP53NPSPOWV2325JO6FSUE2M7XPKOZ7IID4",
                 "I57HTTFYXHHAI7XXMEDJ6EKVML6XUNILFVEN2HSQQVGMX56ZUWWQFWUJUY",
-                "RP3UUCLLANRVDXCKKVTBV5BY5OPNGFWB5YEIKK7KTR6M7CQAMIB5MV4SRQ"
+                "RP3UUCLLANRVDXCKKVTBV5BY5OPNGFWB5YEIKK7KTR6M7CQAMIB5MV4SRQ",
+                "CONEZ362OXBZTZJNAZVPME4JNH77TAZ74LAJGSIEKYISOX3DH5MVYAQUF4"
             };
             this.RevokedAddresses = new string[]
             {
                 "C3GRANDYJXZRIGSDKTQUBRTHP53NPSPOWV2325JO6FSUE2M7XPKOZ7IID4",
                 "I57HTTFYXHHAI7XXMEDJ6EKVML6XUNILFVEN2HSQQVGMX56ZUWWQFWUJUY",
-                "RP3UUCLLANRVDXCKKVTBV5BY5OPNGFWB5YEIKK7KTR6M7CQAMIB5MV4SRQ"
+                "RP3UUCLLANRVDXCKKVTBV5BY5OPNGFWB5YEIKK7KTR6M7CQAMIB5MV4SRQ",
+                "CONEZ362OXBZTZJNAZVPME4JNH77TAZ74LAJGSIEKYISOX3DH5MVYAQUF4"
             };
             this.SearchAlandia = true;
             this.SearchRand = true;
             this.SearchAlgox = true;
-            this.AlgoxCollectionNames = new string[] { "randy-cones", "randy-pixels" };
+            this.AlgoxCollectionNames = new string[] { "randy-cones", "randy-pixels", "8-bit-cones" };
         }
 
         public override async Task<IDictionary<ulong, ulong>> FetchAssetValues()
@@ -52,6 +54,16 @@ namespace Airdrop.AirdropFactories.Holdings
             }
 
             foreach (string creatorAddress in this.CreatorAddresses.Skip(1).Take(2))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, 15);
+                }
+            }
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(3).Take(1))
             {
                 Account account = await this.AlgodUtils.GetAccount(creatorAddress);
                 var assets = account.CreatedAssets;
