@@ -43,7 +43,7 @@ namespace Airdrop.AirdropFactories.Unique
                 {
                     if (addresses.Contains(balance.Address))
                     {
-                        m.AddAirdropUnit(new AirdropUnit(balance.Address, DropAssetId, id, 1, balance.Amount, true));
+                        m.AddAirdropUnit(new AirdropUnit(balance.Address, DropAssetId, id, .5, balance.Amount, true));
                     }
                 }
             }
