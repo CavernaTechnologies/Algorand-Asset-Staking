@@ -61,7 +61,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 {
                     if (asset.Params.UnitName.StartsWith("frogBOT"))
                     {
-                        assetValues.Add(asset.Index, 2);
+                        assetValues.Add(asset.Index, 5);
                     }
                 }
             }
@@ -73,7 +73,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
                 foreach (var asset in assets)
                 {
-                    assetValues.Add(asset.Index, 40);
+                    assetValues.Add(asset.Index, 60);
                 }
             }
 
@@ -95,7 +95,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
                 foreach (var asset in assets)
                 {
-                    assetValues.Add(asset.Index, 22);
+                    assetValues.Add(asset.Index, 55);
                 }
             }
 

@@ -448,7 +448,7 @@ namespace AirdropFunction
             }
 
             Key CavernaKey = this.keyManager.CavernaWallet;
-            GooseHoldingsFactory factory = new GooseHoldingsFactory(this.indexerUtils, this.algodUtils);
+            GooseHoldingsFactory factory = new GooseHoldingsFactory(this.indexerUtils, this.algodUtils, config, httpClientFactory);
             IEnumerable<AirdropUnitCollection> collections = await factory.FetchAirdropUnitCollections();
 
             foreach (AirdropUnitCollection collection in collections.OrderBy(c => c.Wallet))

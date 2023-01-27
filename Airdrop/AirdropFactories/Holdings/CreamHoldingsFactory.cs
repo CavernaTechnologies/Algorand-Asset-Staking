@@ -80,6 +80,8 @@ namespace Airdrop.AirdropFactories.Holdings
                 assetValues[id] = 400;
             }
 
+            assetValues[1020992208] = 600;
+
             assetValues.Remove(755007963);
             assetValues.Remove(721340445);
 
