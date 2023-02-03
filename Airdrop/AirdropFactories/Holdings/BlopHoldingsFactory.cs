@@ -11,9 +11,9 @@ using Utils.Indexer;
 
 namespace Airdrop.AirdropFactories.Holdings
 {
-    public class BlopHoldingsFactory : ExchangeHoldingsAirdropFactory
+    public class BlopHoldingsFactory : HoldingsAirdropFactory
     {
-        public BlopHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils, IConfiguration config, IHttpClientFactory httpClientFactory) : base(indexerUtils, algodUtils, config, httpClientFactory.CreateClient())
+        public BlopHoldingsFactory(IIndexerUtils indexerUtils, IAlgodUtils algodUtils) : base(indexerUtils, algodUtils)
         {
             this.DropAssetId = 896650094;
             this.Decimals = 2;
@@ -21,10 +21,6 @@ namespace Airdrop.AirdropFactories.Holdings
             this.CreatorAddresses = new string[] { "U4WMQCXM7655FIJS6AYBKC6A3R74X2XZ3T4SPJV52BQVJ5WF7HTYKGQQ74" };
             this.RevokedAddresses = new string[] { "U4WMQCXM7655FIJS6AYBKC6A3R74X2XZ3T4SPJV52BQVJ5WF7HTYKGQQ74" };
             this.RevokedAssets = new ulong[] { };
-            this.SearchAlandia = true;
-            this.SearchAlgox = true;
-            this.SearchRand = true;
-            this.AlgoxCollectionNames = new string[] { "alg-octopus" };
         }
 
         public override async Task<IDictionary<ulong, ulong>> FetchAssetValues()
