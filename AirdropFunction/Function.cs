@@ -27,7 +27,7 @@ namespace AirdropFunction
         public const string MantisHoldingsAirdropSchedule = "0 0 18 * * *";
         public const string AlvaHoldingsAirdropSchedule = "0 0 16 * * Sun,Tue,Thu,Sat";
         public const string GooseHoldingsAirdropSchedule = "0 0 16 * * Mon,Thu";
-        public const string PyreneesHoldingsAirdropSchedule = "0 0 0 * * Mon";
+        public const string PyreneesHoldingsAirdropSchedule = "0 0 0 * * Tue";
         public const string GrubHoldingsAirdropSchedule = "0 0 19 * * Thu";
         public const string HootHoldingsAirdropSchedule = "0 0 19 * * Mon";
         public const string BuzzyBeeHoldingsAirdropSchedule = "0 0 19 * * Fri";

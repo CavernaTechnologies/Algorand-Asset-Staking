@@ -44,7 +44,7 @@ namespace FunctionTest
         [Fact]
         public void PyreneesHoldingsAirdropScheduleTest()
         {
-            Assert.Equal("0 0 0 * * Mon", Function.PyreneesHoldingsAirdropSchedule);
+            Assert.Equal("0 0 0 * * Tue", Function.PyreneesHoldingsAirdropSchedule);
         }
 
         [Fact]
