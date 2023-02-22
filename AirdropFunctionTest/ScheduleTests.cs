@@ -130,5 +130,11 @@ namespace FunctionTest
         {
             Assert.Equal("0 0 22 * * Sat", Function.BeaverHoldingsAirdropSchedule);
         }
+
+        [Fact]
+        public void RaccoonHoldingsAirdropScheduleTest()
+        {
+            Assert.Equal("0 0 1 * * Fri", Function.RaccoonHoldingsAirdropSchedule);
+        }
     }
 }
