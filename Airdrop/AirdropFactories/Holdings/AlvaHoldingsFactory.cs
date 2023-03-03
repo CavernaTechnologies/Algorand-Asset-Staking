@@ -73,33 +73,37 @@ namespace Airdrop.AirdropFactories.Holdings
 
                     if (endingDigits.Contains(id % 10))
                     {
-                        dynamic obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(txn.Note));
-                        try
+                        if (txn?.Note != null)
                         {
-                            if (obj.standard == "arc69")
+                            try
                             {
-                                int power = (int)obj.properties.Power;
-                                string background = (string)obj.properties.Background;
-                                if (power > 10)
+                                dynamic obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(txn.Note));
+
+                                if (obj.standard == "arc69")
                                 {
-                                    if (background.StartsWith("Foil"))
+                                    int power = (int)obj.properties.Power;
+                                    string background = (string)obj.properties.Background;
+                                    if (power > 10)
                                     {
-                                        assetValues[id] = foilValue;
-                                    }
-                                    else
-                                    {
-                                        assetValues[id] = powerToValue[power];
+                                        if (background.StartsWith("Foil"))
+                                        {
+                                            assetValues[id] = foilValue;
+                                        }
+                                        else
+                                        {
+                                            assetValues[id] = powerToValue[power];
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    Console.WriteLine("Failed on " + id);
+                                }
                             }
-                            else
+                            catch
                             {
                                 Console.WriteLine("Failed on " + id);
                             }
-                        }
-                        catch
-                        {
-                            Console.WriteLine("Failed on " + id);
                         }
                     }
 
@@ -120,28 +124,30 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 if (txn?.CreatedAssetIndex != null)
                 {
-                    ulong id = (ulong)txn.CreatedAssetIndex;
-                    dynamic obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(txn.Note));
-                    try
+                    if (txn?.Note != null)
                     {
-                        if (obj.standard == "arc69")
+                        ulong id = (ulong)txn.CreatedAssetIndex;
+                        dynamic obj = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(txn.Note));
+                        try
                         {
-                            string background = (string)obj.properties.Background;
-                            if (background.StartsWith("Foil"))
+                            if (obj.standard == "arc69")
                             {
-                                modifiers[id] = .005;
+                                string background = (string)obj.properties.Background;
+                                if (background.StartsWith("Foil"))
+                                {
+                                    modifiers[id] = .005;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed on " + id);
                             }
                         }
-                        else
+                        catch
                         {
                             Console.WriteLine("Failed on " + id);
                         }
                     }
-                    catch
-                    {
-                        Console.WriteLine("Failed on " + id);
-                    }
-
                 }
             }
 
