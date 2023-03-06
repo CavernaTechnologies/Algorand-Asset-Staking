@@ -40,6 +40,8 @@ namespace Airdrop.AirdropFactories.Holdings
                 "AZCR3TDUWKS2DJS3AWYQ6I7LUA2LRT4CFR2U5WZGXWMZV3RNJURPZYFWBQ",
 
                 "Y6BWPPICS2HYP2KRVZCDASKJHJLBU7EZCA2JFSLMPYGC6FPDLRMF7UMVUQ",
+
+                "LOVEOJUJL4GDH7VLETAHG3BOFE4UDTMLEDMBYLQPICWCWCVTFKCQJJCEDE",
             };
             this.SearchRand = true;
             this.SearchAlandia = true;
@@ -54,7 +56,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 "doofy",
                 "dooofy",
                 "algo-rpg-npc",
-                "99-foolish-uncles"
+                "99-foolish-uncles",
             };
         }
 
@@ -131,6 +133,19 @@ namespace Airdrop.AirdropFactories.Holdings
                 foreach (var asset in assets)
                 {
                     assetValues.Add(asset.Index, foolishValue);
+                }
+            }
+
+            ulong loveValue = 25;
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(12).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+
+                foreach (var asset in assets.Where(a => a.Params.Total == 1))
+                {
+                    assetValues.Add(asset.Index, loveValue);
                 }
             }
 
