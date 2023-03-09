@@ -57,6 +57,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 "dooofy",
                 "algo-rpg-npc",
                 "99-foolish-uncles",
+                "from-algorand-with-love",
             };
         }
 
@@ -136,7 +137,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
-            ulong loveValue = 25;
+            ulong loveValue = 44;
 
             foreach (string creatorAddress in this.CreatorAddresses.Skip(12).Take(1))
             {
