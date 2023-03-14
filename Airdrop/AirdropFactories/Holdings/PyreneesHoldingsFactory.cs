@@ -53,6 +53,8 @@ namespace Airdrop.AirdropFactories.Holdings
                 }
             }
 
+            assetValues.Remove(1054691020);
+
             return assetValues;
         }
     }
