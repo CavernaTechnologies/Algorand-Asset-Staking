@@ -38,7 +38,8 @@ namespace Airdrop.AirdropFactories.Holdings
                 "MNGORTG4A3SLQXVRICQXOSGQ7CPXUPMHZT3FJZBIZHRYAQCYMEW6VORBIA",
                 "MNGOZ3JAS3C4QTGDQ5NVABUEZIIF4GAZY52L3EZE7BQIBFTZCNLQPXHRHE",
                 "MNGO4JTLBN64PJLWTQZYHDMF2UBHGJGW5L7TXDVTJV7JGVD5AE4Y3HTEZM",
-                "MOSTLYSNUJP7PG6Q3FNJCGGENQXMOH3PXXMIJRFLODLG2DNDBHI7QHJSOE"
+                "MOSTLYSNUJP7PG6Q3FNJCGGENQXMOH3PXXMIJRFLODLG2DNDBHI7QHJSOE",
+                "Q5IGP3JUTUAWJTWBG3GOZO3AFR2TP6XVNNPKTOQABHHNW6GXOWLCUKZK24", // Hacked address
             };
             this.cosmos = cosmos;
             this.AlgoxCollectionNames = new string[] { "mngo", "ling-lings", "yieldlings", "mostly-frens" };
@@ -49,6 +50,8 @@ namespace Airdrop.AirdropFactories.Holdings
             IEnumerable<AssetValue> values = await cosmos.GetAssetValues("LingLing", "MNGO", "Yieldling", "Frens");
 
             Dictionary<ulong, ulong> assetValues = values.ToDictionary(av => av.AssetId, av => av.Value);
+
+            assetValues.Remove(359178780);
 
             return assetValues;
         }
