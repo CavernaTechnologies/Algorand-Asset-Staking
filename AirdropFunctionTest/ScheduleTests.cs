@@ -38,7 +38,7 @@ namespace FunctionTest
         [Fact]
         public void GooseHoldingsAirdropScheduleTest()
         {
-            Assert.Equal("0 0 16 * * Mon,Thu", Function.GooseHoldingsAirdropSchedule);
+            Assert.Equal("0 0 16 * * Mon", Function.GooseHoldingsAirdropSchedule);
         }
 
         [Fact]
