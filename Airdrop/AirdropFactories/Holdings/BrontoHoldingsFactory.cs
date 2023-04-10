@@ -93,7 +93,7 @@ namespace Airdrop.AirdropFactories.Holdings
                     {
                         if (!this.RevokedAssets.Contains(asset.Index))
                         {
-                            assetValues.Add(asset.Index, 30);
+                            assetValues.Add(asset.Index, 125);
                         }
                     }
                 }
@@ -101,7 +101,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 {
                     foreach (var asset in assets)
                     {
-                        assetValues.Add(asset.Index, 30);
+                        assetValues.Add(asset.Index, 125);
                     }
                 }
             }
@@ -117,7 +117,7 @@ namespace Airdrop.AirdropFactories.Holdings
                     {
                         if (!this.RevokedAssets.Contains(asset.Index))
                         {
-                            assetValues.Add(asset.Index, 50);
+                            assetValues.Add(asset.Index, 250);
                         }
                     }
                 }
@@ -125,7 +125,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 {
                     foreach (var asset in assets)
                     {
-                        assetValues.Add(asset.Index, 50);
+                        assetValues.Add(asset.Index, 250);
                     }
                 }
             }
