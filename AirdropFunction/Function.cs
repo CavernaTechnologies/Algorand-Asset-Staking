@@ -43,6 +43,7 @@ namespace AirdropFunction
         public const string FrogHoldingsAirdropSchedule = "0 0 23 * * Fri";
         public const string BeaverHoldingsAirdropSchedule = "0 0 22 * * Sat";
         public const string RaccoonHoldingsAirdropSchedule = "0 0 1 * * Fri";
+        public const string AlgaeHoldingsAirdropSchedule = "0 0 16 * * Mon";
         private readonly IAlgodUtils algodUtils;
         private readonly IIndexerUtils indexerUtils;
         private readonly ICosmos cosmos;
@@ -1778,6 +1779,89 @@ namespace AirdropFunction
 
             Key CavernaKey = this.keyManager.CavernaWallet;
             RaccoonHoldingsFactory factory = new RaccoonHoldingsFactory(this.indexerUtils, this.algodUtils);
+            IEnumerable<AirdropUnitCollection> collections = await factory.FetchAirdropUnitCollections();
+
+            foreach (AirdropUnitCollection collection in collections.OrderBy(c => c.Wallet))
+            {
+                log.LogInformation($"{collection.Wallet} : {collection.Total}");
+            }
+
+            ulong total = (ulong)collections.Sum(a => (double)a.Total);
+            log.LogInformation("Total drop: " + total);
+            log.LogInformation("Number of drops: " + collections.Count());
+
+            ulong curr = await algodUtils.GetAssetAmount(CavernaKey.ToString(), factory.DropAssetId);
+
+            if (curr < total)
+            {
+                log.LogError("Insufficient funds. Erroring out...");
+                throw new Exception("Insufficient Funds");
+            }
+
+            List<SignedTransaction> signedTransactions = new List<SignedTransaction>();
+            TransactionParametersResponse transactionParameters = await algodUtils.GetTransactionParams();
+
+            foreach (AirdropUnitCollection collection in collections)
+            {
+                try
+                {
+                    Address address = new Address(collection.Wallet);
+
+                    Transaction txn = Transaction.CreateAssetTransferTransaction(
+                            assetSender: CavernaKey.GetAddress(),
+                            assetReceiver: address,
+                            assetCloseTo: null,
+                            assetAmount: collection.Total,
+                            flatFee: transactionParameters.Fee,
+                            firstRound: transactionParameters.LastRound,
+                            lastRound: transactionParameters.LastRound + 1000,
+                            note: Encoding.UTF8.GetBytes(collection.ToString().Length < 1000 ? collection.ToString() : "Note too long..."),
+                            genesisID: transactionParameters.GenesisId,
+                            genesisHash: new Algorand.Digest(transactionParameters.GenesisHash),
+                            assetIndex: collection.DropAssetId
+                        );
+
+                    SignedTransaction stxn = CavernaKey.SignTransaction(txn);
+
+                    signedTransactions.Add(stxn);
+                }
+                catch (ArgumentException)
+                {
+                    log.LogWarning(collection.Wallet + " is an invalid address");
+                }
+            }
+
+            ulong startingRound = await this.algodUtils.GetLastRound();
+            log.LogInformation("Starting round: " + startingRound);
+
+            await this.algodUtils.SubmitSignedTransactions(signedTransactions);
+
+            ulong lastRound = await this.algodUtils.GetLastRound();
+            await this.algodUtils.GetStatusAfterRound(lastRound + 10);
+
+            var transactions = await indexerUtils.GetTransactions(CavernaKey.ToString(), addressRole: Algorand.V2.Indexer.Model.AddressRole.Sender, txType: Algorand.V2.Indexer.Model.TxType.Axfer, minRound: startingRound);
+            HashSet<string> txIds = transactions.Select(t => t.Id).ToHashSet();
+
+            foreach (SignedTransaction stxn in signedTransactions)
+            {
+                if (!txIds.Contains(stxn.transactionID))
+                {
+                    log.LogWarning("Failed to drop: " + stxn.tx.assetReceiver);
+                }
+            }
+        }
+
+        [FunctionName("AlgaeHoldingsAirdrop")]
+        public async Task AlgaeHoldingsAirdrop([TimerTrigger(AlgaeHoldingsAirdropSchedule)] TimerInfo myTimer, ILogger log)
+        {
+            if (myTimer.IsPastDue)
+            {
+                log.LogError("Airdrop is past due. Erroring out...");
+                throw new Exception("Airdrop past due");
+            }
+
+            Key CavernaKey = this.keyManager.CavernaWallet;
+            AlgaeHoldingsFactory factory = new AlgaeHoldingsFactory(this.indexerUtils, this.algodUtils);
             IEnumerable<AirdropUnitCollection> collections = await factory.FetchAirdropUnitCollections();
 
             foreach (AirdropUnitCollection collection in collections.OrderBy(c => c.Wallet))
