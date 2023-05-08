@@ -55,6 +55,32 @@ namespace Airdrop.AirdropFactories.Holdings
 
             assetValues.Remove(1054691020);
 
+            assetValues[1062726124] = 5;
+            assetValues[1062726143] = 5;
+            assetValues[1062726279] = 5;
+            assetValues[1062726463] = 5;
+            assetValues[1062727747] = 5;
+            assetValues[1062727760] = 5;
+            assetValues[1062727775] = 5;
+            assetValues[1062746526] = 5;
+            assetValues[1062746555] = 5;
+            assetValues[1062746764] = 5;
+            assetValues[1062746886] = 5;
+            assetValues[1062746998] = 5;
+            assetValues[1062747173] = 5;
+            assetValues[1062747634] = 5;
+            assetValues[1062747636] = 5;
+            assetValues[1062747826] = 5;
+            assetValues[1062748006] = 5;
+            assetValues[1062748204] = 5;
+            assetValues[1062758966] = 5;
+            assetValues[1062759069] = 5;
+            assetValues[1062759587] = 5;
+            assetValues[1062759961] = 5;
+            assetValues[1062776418] = 5;
+            assetValues[1062776677] = 5;
+            assetValues[1062776679] = 5;
+
             return assetValues;
         }
     }
