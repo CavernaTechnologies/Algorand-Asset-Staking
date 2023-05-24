@@ -19,6 +19,7 @@ namespace Airdrop.AirdropFactories.Holdings
             this.CreatorAddresses = new string[] {
                 "I36V2745GNHNEE6CXZSAB76DCRTFHN7RLBRFWVZ6DAXUF6PFSMHZDQK57I",
                 "YRBKG74MVJUVFR7BKOMA4YNCAG4L3BJVOVIP7QMDPOVOJBGCLXZHSJPGRY",
+                "HKTWNMMO3PV67VHRCW2GNKS5NKACNBQE2SW42BCTKWHJ3HO7E5XDNLBNPA",
             };
             this.RevokedAssets = new ulong[]
             {
@@ -27,6 +28,7 @@ namespace Airdrop.AirdropFactories.Holdings
             {
                 "I36V2745GNHNEE6CXZSAB76DCRTFHN7RLBRFWVZ6DAXUF6PFSMHZDQK57I",
                 "YRBKG74MVJUVFR7BKOMA4YNCAG4L3BJVOVIP7QMDPOVOJBGCLXZHSJPGRY",
+                "HKTWNMMO3PV67VHRCW2GNKS5NKACNBQE2SW42BCTKWHJ3HO7E5XDNLBNPA",
             };
         }
 
@@ -83,6 +85,30 @@ namespace Airdrop.AirdropFactories.Holdings
                     foreach (var asset in assets)
                     {
                         assetValues.Add(asset.Index, seagod);
+                    }
+                }
+            }
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(2).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+
+                if (this.RevokedAddresses != null)
+                {
+                    foreach (var asset in assets)
+                    {
+                        if (!this.RevokedAssets.Contains(asset.Index))
+                        {
+                            assetValues.Add(asset.Index, 15);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var asset in assets)
+                    {
+                        assetValues.Add(asset.Index, 15);
                     }
                 }
             }
