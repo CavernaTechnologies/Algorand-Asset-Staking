@@ -33,7 +33,8 @@ namespace Airdrop.AirdropFactories.Holdings
             this.RevokedAddresses = new string[]
             {
                 "LUNDIW5HP5KWUG6JTXHMDB5XPNXQ43OIBXET3RTBXNVJISQUTBKWONTGNI",
-                "UB6E3ACF7MHSAY5LRRNUHMW55IAQGGWOVADTVDNMF7JL7CA25GO7V4F2MI"
+                "UB6E3ACF7MHSAY5LRRNUHMW55IAQGGWOVADTVDNMF7JL7CA25GO7V4F2MI",
+                "GVDZJU4IMNEYKEFF4TOMZLCFKJ6LAXWF3427P6LRYLUOSP6ZBECTJX6ZEA"
             };
             this.AssetValue = 10;
         }
