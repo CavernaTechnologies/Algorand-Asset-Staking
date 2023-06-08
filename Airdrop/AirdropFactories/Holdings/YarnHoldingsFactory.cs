@@ -23,6 +23,7 @@ namespace Airdrop.AirdropFactories.Holdings
                 "FROGJWNVWICMFTAGNCLGAI5UNXJEEFCUDNPBD2U6VWTATXANHXB6BHRW2M",
                 "FROGOHZ3D5GHBKPDDQWKT5RWABZGY3VD6D3UNG7YLTABKDDLJJD4E257HA",
                 "SNAILSURAATOMSYJ36S7ZVZ3OD5USXU7BHHZFEB5QOXEDDTQH2MOO3REAI",
+                "PIXYN3736RN7XS7ZA354R33RTDUTPRAZ2YMGU3V72I3EVDY62O3TDK43X4",
             };
             this.SearchRand = true;
             this.SearchAlgox = true;
@@ -73,7 +74,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
                 foreach (var asset in assets)
                 {
-                    assetValues.Add(asset.Index, 60);
+                    assetValues.Add(asset.Index, 69);
                 }
             }
 
@@ -89,6 +90,17 @@ namespace Airdrop.AirdropFactories.Holdings
             }
 
             foreach (string creatorAddress in this.CreatorAddresses.Skip(3).Take(1))
+            {
+                Account account = await this.AlgodUtils.GetAccount(creatorAddress);
+                var assets = account.CreatedAssets;
+
+                foreach (var asset in assets)
+                {
+                    assetValues.Add(asset.Index, 55);
+                }
+            }
+
+            foreach (string creatorAddress in this.CreatorAddresses.Skip(4).Take(1))
             {
                 Account account = await this.AlgodUtils.GetAccount(creatorAddress);
                 var assets = account.CreatedAssets;
