@@ -42,23 +42,9 @@ namespace Airdrop.AirdropFactories.Holdings
                 "Y6BWPPICS2HYP2KRVZCDASKJHJLBU7EZCA2JFSLMPYGC6FPDLRMF7UMVUQ",
 
                 "LOVEOJUJL4GDH7VLETAHG3BOFE4UDTMLEDMBYLQPICWCWCVTFKCQJJCEDE",
-            };
-            this.SearchRand = true;
-            this.SearchAlandia = true;
-            this.SearchAlgox = true;
-            this.AlgoxCollectionNames = new string[]
-            {
-                "pixel-geko",
-                "99-wise-uncles",
-                "moofys",
-                "gekofam",
-                "mia",
-                "doofy",
-                "dooofy",
-                "algo-rpg-npc",
-                "99-foolish-uncles",
-                "from-algorand-with-love",
-            };
+            }; 
+            this.RevokedAddresses = new string[] {  };
+            this.RevokedAssets = new ulong[] { };
         }
 
         public async override Task<IDictionary<ulong, ulong>> FetchAssetValues()
