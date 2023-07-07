@@ -46,7 +46,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
                 foreach (var asset in assets)
                 {
-                    if (asset.Params.UnitName.StartsWith("KH"))
+                    if (asset.Params.UnitName != null && asset.Params.UnitName.StartsWith("KH"))
                     {
                         assetValues.Add(asset.Index, 300);
                     }
@@ -60,7 +60,7 @@ namespace Airdrop.AirdropFactories.Holdings
 
                 foreach (var asset in assets)
                 {
-                    if (asset.Params.UnitName.StartsWith("frogBOT"))
+                    if (asset.Params.UnitName != null && asset.Params.UnitName.StartsWith("frogBOT"))
                     {
                         assetValues.Add(asset.Index, 5);
                     }
