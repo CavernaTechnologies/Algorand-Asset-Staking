@@ -8,9 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Utils.Algod;
-using Utils.Cosmos;
 using Utils.Indexer;
-using Utils.KeyManagers;
 
 namespace AirdropRunner
 {
@@ -25,14 +23,6 @@ namespace AirdropRunner
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((context, config) =>
-                {
-                    var settings = config.Build();
-
-                    string azureKeyVaultEndpoint = settings.GetValue<string>("Endpoints:AzureKeyVault");
-
-                    config.AddAzureKeyVault(azureKeyVaultEndpoint);
-                })
                 .ConfigureServices((context, services) =>
                 {
                     services.AddLogging(configure => configure.AddConsole());
@@ -40,28 +30,23 @@ namespace AirdropRunner
                     services.AddHttpClient<IDefaultApi, DefaultApi>(client =>
                     {
                         client.BaseAddress = new Uri(context.Configuration["Endpoints:Algod"]);
-                        client.DefaultRequestHeaders.Add("X-Algo-API-Token", context.Configuration["AlgodToken"]);
                         client.Timeout = Timeout.InfiniteTimeSpan;
                     });
 
                     services.AddHttpClient<ILookupApi, LookupApi>(client =>
                     {
                         client.BaseAddress = new Uri(context.Configuration["Endpoints:Indexer"]);
-                        client.DefaultRequestHeaders.Add("X-Algo-API-Token", context.Configuration["IndexerToken"]);
                         client.Timeout = Timeout.InfiniteTimeSpan;
                     });
 
                     services.AddHttpClient<ISearchApi, SearchApi>(client =>
                     {
                         client.BaseAddress = new Uri(context.Configuration["Endpoints:Indexer"]);
-                        client.DefaultRequestHeaders.Add("X-Algo-API-Token", context.Configuration["IndexerToken"]);
                         client.Timeout = Timeout.InfiniteTimeSpan;
                     });
 
                     services.AddTransient<IAlgodUtils, AlgodUtils>();
                     services.AddTransient<IIndexerUtils, IndexerUtils>();
-                    services.AddTransient<ICosmos, Cosmos>();
-                    services.AddTransient<IKeyManager, KeyManager>();
                     services.AddTransient<App>();
                 });
     }
